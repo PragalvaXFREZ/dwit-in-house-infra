@@ -1,4 +1,4 @@
-﻿# Git Instructions and What They Mean
+# Git Instructions and What They Mean
 
 Git is a version control system. It tracks changes to your files, lets you
 go back to older versions, and lets many people work on the same project
