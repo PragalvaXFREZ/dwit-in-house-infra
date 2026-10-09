@@ -8,7 +8,23 @@ Our project is a Python CLI that validates a fictional server inventory. It read
 
 You need Git, Python 3.11 or newer, and basic Python functions, lists and loops. Review the [Git guide](../git/git-github-guide.md) if branches and commits are new.
 
-Fork this repository for labs 1–4. Clone your fork and make a working branch. Run commands from `learning/ci/demo/` unless a lab says otherwise. Linux/macOS commands are shown; on Windows use `py` to create the environment and `.venv\Scripts\activate` to activate it.
+You do not need push access to this repository. Work in your own fork and hand your work back as a pull request.
+
+## Fork, work, hand in
+
+1. On GitHub, open this repository and click **Fork** (top right). Keep the default settings. GitHub creates a copy under your own account.
+2. Clone **your fork**, not this repository, then make a branch for the labs:
+
+   ```bash
+   git clone https://github.com/<your-username>/dwit-in-house-infra.git
+   cd dwit-in-house-infra
+   git checkout -b ci-labs
+   ```
+
+3. Commit after each lab and push to your fork with `git push -u origin ci-labs`.
+4. To hand in, open your fork on GitHub and click **Contribute → Open pull request**. Target this repository's `main` branch. Your mentor reviews it there; it will not be merged, and that is fine.
+
+Run commands from `learning/ci/demo/` unless a lab says otherwise. Linux/macOS commands are shown; on Windows use `py` to create the environment, `.venv\Scripts\activate` to activate it, and `echo $LASTEXITCODE` in PowerShell wherever a lab uses `echo $?`.
 
 ## The five labs
 
