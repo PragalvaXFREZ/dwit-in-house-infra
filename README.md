@@ -10,3 +10,8 @@ Student-run infrastructure project under the R&D Department at Deerwalk Institut
 | [`reports/`](reports/) | Dated progress reports, named `YYYY-MM-DD-short-title.md` |
 
 Add new folders when we actually need them.
+
+## Learning
+
+- [Git and GitHub](learning/git/git-github-guide.md)
+- [CI: five hands-on labs](learning/ci/README.md) — local checks, linting, tests, GitHub Actions, then an isolated runner.
