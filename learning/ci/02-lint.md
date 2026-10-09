@@ -12,7 +12,7 @@ python -m ruff check inventory.py
 python -m ruff format --check inventory.py
 ```
 
-Record the installed Ruff version in a new `requirements-dev.txt` using an exact `ruff==VERSION` entry. Confirm a fresh virtual environment can install it with `python -m pip install -r requirements-dev.txt`. Commit that file.
+Find the installed version with `python -m ruff --version`. Record it in a new `requirements-dev.txt` using an exact `ruff==VERSION` entry. Confirm a fresh virtual environment can install it with `python -m pip install -r requirements-dev.txt`. Commit that file.
 
 ## Break and investigate
 

@@ -85,6 +85,19 @@ git push -u origin main
 * **`git clone --depth=1`**
   * **Shallow Clone:** Downloads only the single latest snapshot, skipping the entire historical timeline to save space and time.
 
+### Forks and Pull Requests
+A **fork** is your own copy of someone else's repository on GitHub. You can push to it even when you cannot push to the original.
+
+1. Click **Fork** on the repository page. Clone the fork, not the original.
+2. Make a branch, commit, and `git push -u origin <branch>` to your fork.
+3. Open a **pull request** from your fork's branch to the original repository. The owner reviews and decides whether to merge.
+4. To pick up later changes from the original, add it as a second remote and pull from it:
+
+```bash
+git remote add upstream <original-repository-url>
+git pull upstream main
+```
+
 ---
 
 ## ⏪ Undoing Changes & Time Travel
