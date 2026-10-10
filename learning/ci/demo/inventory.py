@@ -16,7 +16,8 @@ def validate_inventory(servers):
         if not isinstance(server, dict):
             errors.append(f"server {index}: must be a JSON object")
             continue
-        # TODO (lab 1): reject missing, non-string, empty or whitespace-only names.
+
+        # Name: must exist, be a string, and contain non-whitespace characters.
         if "name" not in server:
             errors.append(f"server {index}: missing 'name' field")
         elif not isinstance(server["name"], str):
@@ -24,7 +25,7 @@ def validate_inventory(servers):
         elif server["name"].strip() == "":
             errors.append(f"server {index}: 'name' cannot be empty or whitespace-only")
 
-        # TODO (lab 2): reject missing or invalid IP addresses.
+        # IP: must exist, be a string, and be a valid IPv4 or IPv6 address.
         if "ip" not in server:
             errors.append(f"server {index}: missing 'ip' field")
         elif not isinstance(server["ip"], str):
@@ -34,8 +35,7 @@ def validate_inventory(servers):
                 ipaddress.ip_address(server["ip"])
             except ValueError:
                 errors.append(f"server {index}: 'ip' is not a valid IP address")
-            
-
+                
     return errors
 
 
