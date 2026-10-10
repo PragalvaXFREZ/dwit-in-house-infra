@@ -17,6 +17,16 @@ def validate_inventory(servers):
             continue
         # TODO (lab 1): reject missing, non-string, empty or whitespace-only names.
         # Add your own validation rule after implementing the name check.
+        if "name" not in server:
+            errors.append(f"server {index}: missing 'name' field")
+            continue
+        if not isinstance(server["name"], str):
+            errors.append(f"server {index}: 'name' must be a string")
+            continue
+        if server["name"].strip() == "":
+            errors.append(f"server {index}: 'name' cannot be empty or whitespace-only")
+            continue
+
     return errors
 
 
