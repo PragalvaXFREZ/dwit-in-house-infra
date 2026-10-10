@@ -1,6 +1,7 @@
 """Validate a fictional server inventory; no network access is performed."""
 
 import argparse
+import ipaddress
 import json
 from pathlib import Path
 
@@ -16,16 +17,24 @@ def validate_inventory(servers):
             errors.append(f"server {index}: must be a JSON object")
             continue
         # TODO (lab 1): reject missing, non-string, empty or whitespace-only names.
-        # Add your own validation rule after implementing the name check.
         if "name" not in server:
             errors.append(f"server {index}: missing 'name' field")
-            continue
-        if not isinstance(server["name"], str):
-            errors.append(f"server {index}: 'name' must be a string")
-            continue
-        if server["name"].strip() == "":
+        elif not isinstance(server["name"], str):
+            errors.append(f"server {index}: 'name' must be a string") 
+        elif server["name"].strip() == "":
             errors.append(f"server {index}: 'name' cannot be empty or whitespace-only")
-            continue
+
+        # TODO (lab 2): reject missing or invalid IP addresses.
+        if "ip" not in server:
+            errors.append(f"server {index}: missing 'ip' field")
+        elif not isinstance(server["ip"], str):
+            errors.append(f"server {index}: 'ip' must be a string")
+        else:
+            try:
+                ipaddress.ip_address(server["ip"])
+            except ValueError:
+                errors.append(f"server {index}: 'ip' is not a valid IP address")
+            
 
     return errors
 
