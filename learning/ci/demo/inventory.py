@@ -5,8 +5,6 @@ import json
 from pathlib import Path
 
 
-
-
 def validate_inventory(servers):
     """Return validation errors. An empty list means the inventory is valid."""
     if not isinstance(servers, list):
@@ -20,9 +18,6 @@ def validate_inventory(servers):
             errors.append(f"server {index}: must be a JSON object")
             continue
 
-        name = server.get("name")
-
-        if not isinstance(name, str) or not name.strip():
         name = server.get("name")
 
         if not isinstance(name, str) or not name.strip():
@@ -43,12 +38,11 @@ def validate_inventory(servers):
     return errors
 
 
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("inventory", type=Path, help="path to a JSON inventory")
     args = parser.parse_args()
+
     try:
         servers = json.loads(args.inventory.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, json.JSONDecodeError) as error:
@@ -56,10 +50,12 @@ def main():
         return 1
 
     errors = validate_inventory(servers)
+
     if errors:
         for error in errors:
             print(error)
         return 1
+
     print("Inventory is valid")
     return 0
 
