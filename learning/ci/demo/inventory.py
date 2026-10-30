@@ -21,17 +21,13 @@ def validate_inventory(servers):
         name = server.get("name")
 
         if not isinstance(name, str) or not name.strip():
-            errors.append(
-                f"server {index}: name must be a non-empty string"
-            )
+            errors.append(f"server {index}: name must be a non-empty string")
             continue
 
         clean_name = name.strip()
 
         if clean_name in seen_names:
-            errors.append(
-                f"server {index}: duplicate server name '{clean_name}'"
-            )
+            errors.append(f"server {index}: duplicate server name '{clean_name}'")
         else:
             seen_names.add(clean_name)
 

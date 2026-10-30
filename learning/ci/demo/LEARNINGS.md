@@ -15,22 +15,40 @@
 
 ## Commands Practiced
 
+### Virtual Environment and Installation
+
+- `py -3 -m venv .venv`
+- `& .\.venv\Scripts\Activate.ps1`
+- `python -m pip install ruff==0.17.0`
 - `python -m ruff --version`
+
+### Linting and Formatting
+
+- `python -m ruff check .`
 - `python -m ruff check inventory.py`
 - `python -m ruff check --fix inventory.py`
-- `python -m ruff format --check inventory.py`
+- `python -m ruff format --check .`
+- `python -m ruff format .`
 - `python -m ruff format inventory.py`
-- `python -m pip install -r requirements-dev.txt`
+
+### Testing and Verification
+
+- `python -m py_compile inventory.py`
+- `python inventory.py examples/valid.json`
+- `python -m unittest discover -s . -p "test_*.py" -v`
 
 ## Testing and Verification
 
-- Introduced an unused `math` import and observed Ruff report the issue.
-- Checked the exit code after a linting failure.
-- Removed the unused import and verified that linting passed.
-- Introduced inconsistent spacing and used Ruff to correct the formatting.
-- Configured rule `B007`, demonstrated a violation, and fixed it.
-- Tested the pinned Ruff version in a fresh virtual environment.
+- Installed Ruff version `0.17.0` in a Python virtual environment.
+- Configured Ruff using `pyproject.toml`.
+- Ran Ruff linting and confirmed that all checks passed.
+- Ran the formatting check and found formatting inconsistencies in `inventory.py`.
+- Used Ruff formatting to automatically correct the inconsistencies.
+- Ran the formatting check again and confirmed that all five Python files were formatted.
+- Compiled `inventory.py` successfully.
+- Executed the inventory program and received the output `Inventory is valid`.
+- Ran the unit test suite and confirmed that all 10 tests passed.
 
 ## Key Takeaway
 
-Linting and formatting help maintain consistent, readable Python code and allow CI pipelines to detect problems automatically before code is merged.
+Linting and formatting help maintain consistent, readable Python code. Using Ruff in a CI pipeline allows code quality issues and formatting inconsistencies to be detected automatically before code is merged.
