@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 
 
+
+
 def validate_inventory(servers):
     """Return validation errors. An empty list means the inventory is valid."""
     if not isinstance(servers, list):
@@ -21,15 +23,26 @@ def validate_inventory(servers):
         name = server.get("name")
 
         if not isinstance(name, str) or not name.strip():
-            errors.append(f"server {index}: name must be a non-empty string")
+        name = server.get("name")
+
+        if not isinstance(name, str) or not name.strip():
+            errors.append(
+                f"server {index}: name must be a non-empty string"
+            )
             continue
 
-        if name in seen_names:
-            errors.append(f"server {index}: duplicate server name '{name}'")
+        clean_name = name.strip()
+
+        if clean_name in seen_names:
+            errors.append(
+                f"server {index}: duplicate server name '{clean_name}'"
+            )
         else:
-            seen_names.add(name)
+            seen_names.add(clean_name)
 
     return errors
+
+
 
 
 def main():
