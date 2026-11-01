@@ -16,7 +16,7 @@ GitHub disables workflows on a fresh fork. Before pushing your workflow, open yo
 - Set a five-minute job timeout (`timeout-minutes:` on the job).
 - Check out the code with persisted Git credentials disabled (the `persist-credentials` input of `actions/checkout`, under `with:`).
 - Set up Python 3.11 (the `python-version` input of `actions/setup-python`).
-- Run shell steps from `learning/ci/demo` (`defaults.run.working-directory` on the job).
+- Run shell steps from `learning/ci/<your-name>` (`defaults.run.working-directory` on the job).
 - Install the exact dependencies in `requirements-dev.txt`.
 - Run lint, formatting and test checks using the commands from labs 2–3.
 - Only if those checks pass, create and upload a source archive as a build artifact.
@@ -38,7 +38,7 @@ python -m zipapp build -o inventory-checker.pyz
 python inventory-checker.pyz examples/valid.json
 ```
 
-Upload `learning/ci/demo/inventory-checker.pyz`, retaining it for one day.
+Upload `learning/ci/<your-name>/inventory-checker.pyz`, retaining it for one day.
 An action's file-path input is relative to the workspace root; `defaults.run.working-directory` affects shell steps, not `uses` steps.
 
 ## Break and investigate

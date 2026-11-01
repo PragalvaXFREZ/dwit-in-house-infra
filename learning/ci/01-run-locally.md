@@ -5,7 +5,7 @@
 Understand the program before automating it.
 
 ```bash
-cd learning/ci/demo
+cd learning/ci/<your-name>
 python3 -m venv .venv
 source .venv/bin/activate
 python inventory.py examples/valid.json
