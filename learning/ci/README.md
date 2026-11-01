@@ -21,10 +21,18 @@ You do not need push access to this repository. Work in your own fork and hand y
    git checkout -b ci-labs
    ```
 
-3. Commit after each lab and push to your fork with `git push -u origin ci-labs`.
-4. To hand in, open your fork on GitHub and click **Contribute → Open pull request**. Target this repository's `main` branch. Your mentor reviews it there; it will not be merged, and that is fine.
+3. Copy the starter into your own folder and do all your work there. Keep your notes in the same folder.
 
-Run commands from `learning/ci/demo/` unless a lab says otherwise. Linux/macOS commands are shown; on Windows use `py` to create the environment, `.venv\Scripts\activate` to activate it, and `echo $LASTEXITCODE` in PowerShell wherever a lab uses `echo $?`.
+   ```bash
+   cp -r learning/ci/demo learning/ci/<your-name>
+   ```
+
+   In PowerShell, use `Copy-Item -Recurse learning/ci/demo learning/ci/<your-name>`. Do not change `learning/ci/demo/`. It stays as the starter for everyone.
+
+4. Commit after each lab and push to your fork with `git push -u origin ci-labs`.
+5. To hand in, open your fork on GitHub and click **Contribute → Open pull request**. Target this repository's `main` branch. Your mentor reviews it there; it will not be merged, and that is fine.
+
+Run commands from `learning/ci/<your-name>/` unless a lab says otherwise. Linux/macOS commands are shown; on Windows use `py` to create the environment, `.venv\Scripts\activate` to activate it, and `echo $LASTEXITCODE` in PowerShell wherever a lab uses `echo $?`.
 
 ## The five labs
 
