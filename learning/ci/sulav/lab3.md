@@ -1,7 +1,7 @@
 # Lab 3: Test (Sulav)
 
 ## Setup
-Created `demo/test_inventory.py` with `unittest`. Valid input uses
+Created `sulav/test_inventory.py` with `unittest`. Valid input uses
 `assertEqual(result, [])`; invalid input uses `assertTrue(result)` (at least
 one error), so rewording a message does not break a test.
 

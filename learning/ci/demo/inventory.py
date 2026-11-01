@@ -1,7 +1,6 @@
 """Validate a fictional server inventory; no network access is performed."""
 
 import argparse
-import ipaddress
 import json
 from pathlib import Path
 
@@ -11,44 +10,17 @@ def validate_inventory(servers):
     if not isinstance(servers, list):
         return ["inventory must be a JSON list"]
 
-    if len(servers) == 0:
-        return ["inventory cannot be empty"]
-
     errors = []
     for index, server in enumerate(servers, start=1):
         if not isinstance(server, dict):
             errors.append(f"server {index}: must be a JSON object")
             continue
-
-        # Name: must exist, be a string, and contain non-whitespace characters.
-        if "name" not in server:
-            errors.append(f"server {index}: missing 'name' field")
-        elif not isinstance(server["name"], str):
-            errors.append(f"server {index}: 'name' must be a string")
-        elif server["name"].strip() == "":
-            errors.append(f"server {index}: 'name' cannot be empty or whitespace-only")
-
-        # IP: must exist, be a string, and be a valid IPv4 or IPv6 address.
-        if "ip" not in server:
-            errors.append(f"server {index}: missing 'ip' field")
-        elif not isinstance(server["ip"], str):
-            errors.append(f"server {index}: 'ip' must be a string")
-        else:
-            try:
-                ipaddress.ip_address(server["ip"])
-            except ValueError:
-                errors.append(f"server {index}: 'ip' is not a valid IP address")
-
+        # TODO (lab 1): reject missing, non-string, empty or whitespace-only names.
+        # Add your own validation rule after implementing the name check.
     return errors
 
 
 def main():
-    """Validate the inventory file named on the command line.
-
-    Return 0 if the inventory is valid, or 1 if the file cannot be read
-    or the inventory has validation errors.
-    """
-
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("inventory", type=Path, help="path to a JSON inventory")
     args = parser.parse_args()

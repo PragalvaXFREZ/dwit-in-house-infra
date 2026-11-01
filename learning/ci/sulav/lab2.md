@@ -2,7 +2,7 @@
 
 ## Setup
 Installed Ruff 0.17.0 in the virtual environment and pinned it in
-`demo/requirements-dev.txt` as `ruff==0.17.0`. A fresh virtual environment in
+`sulav/requirements-dev.txt` as `ruff==0.17.0`. A fresh virtual environment in
 `/tmp` installed it from the file and reported the same version, so anyone
 (or CI) installing from the file gets the same Ruff.
 
@@ -28,7 +28,7 @@ D103 flags a public function with no docstring. Without one, someone using
 the function has to read all of its code to know what it does and returns.
 
 D103 is off by default: `ruff check` passed even though `main()` had no
-docstring. I enabled it in `demo/pyproject.toml`:
+docstring. I enabled it in `sulav/pyproject.toml`:
 
     [tool.ruff.lint]
     extend-select = ["D103"]

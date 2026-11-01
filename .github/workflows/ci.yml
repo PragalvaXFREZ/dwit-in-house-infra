@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 5
     defaults:
       run:
-        working-directory: learning/ci/demo
+        working-directory: learning/ci/sulav
     steps:
       # checkout, setup-python, install, ruff check, ruff format
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -38,7 +38,7 @@ jobs:
     timeout-minutes: 5
     defaults:
       run:
-        working-directory: learning/ci/demo
+        working-directory: learning/ci/sulav
     steps:
       # checkout, setup-python, unittest
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -58,7 +58,7 @@ jobs:
     timeout-minutes: 5
     defaults:
       run:
-        working-directory: learning/ci/demo
+        working-directory: learning/ci/sulav
     steps:
       # checkout, setup-python, build zipapp, upload
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -79,6 +79,6 @@ jobs:
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: inventory-checker
-          path: learning/ci/demo/inventory-checker.pyz
+          path: learning/ci/sulav/inventory-checker.pyz
           retention-days: 1
           if-no-files-found: error

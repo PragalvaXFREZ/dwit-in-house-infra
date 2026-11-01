@@ -4,7 +4,7 @@ Created `.github/workflows/ci.yml` at the repo root on a `lab4` branch made from
 
 The workflow runs on `push` and `pull_request` on `ubuntu-latest`, with a
 read-only token (`contents: read`), a 5-minute timeout and
-`working-directory: learning/ci/demo`. Each action is pinned to a full commit
+`working-directory: learning/ci/sulav`. Each action is pinned to a full commit
 SHA with its version in a comment (checkout v7.0.1, setup-python v7.1.0,
 upload-artifact v7.0.2), because a tag can be moved but a SHA cannot.
 
@@ -24,7 +24,7 @@ and tests pass. No extra code was needed for that.
 
 ## What failed first
 I ran `pip install` from `.github/workflows` and got "No such file", because
-`requirements-dev.txt` is in `demo`. Same reason the workflow needs
+`requirements-dev.txt` is in `sulav`. Same reason the workflow needs
 `working-directory`. Before pushing I also fixed `rum:` instead of `run:` and
 one step indented 12 spaces instead of 6; either would have made the workflow
 invalid. All checks passed locally (12 tests) and the first run was green.
@@ -45,7 +45,7 @@ The green run had no artifact, only a warning: "No files were found with the
 provided path: inventory-checker.pyz". `working-directory` only applies to
 `run:` steps; a `uses:` step's path starts at the repo root. Fixed with:
 
-    path: learning/ci/demo/inventory-checker.pyz
+    path: learning/ci/sulav/inventory-checker.pyz
     if-no-files-found: error
 
 Now a missing artifact fails the run instead of passing with a warning. A green
