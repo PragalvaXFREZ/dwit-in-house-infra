@@ -1,8 +1,11 @@
 import subprocess
 import sys
 import unittest
+from pathlib import Path
 
 from inventory import validate_inventory
+
+HERE = Path(__file__).resolve().parent
 
 
 class TestInventory(unittest.TestCase):
@@ -52,7 +55,11 @@ class TestInventory(unittest.TestCase):
 
     def test_cli_rejects_invalid_inventory(self):
         result = subprocess.run(
-            [sys.executable, "inventory.py", "examples/invalid.json"],
+            [
+                sys.executable,
+                str(HERE / "inventory.py"),
+                str(HERE / "examples" / "invalid.json"),
+            ],
             capture_output=True,
             text=True,
             check=False,
