@@ -1,4 +1,3 @@
-
 import os
 import signal
 
@@ -38,7 +37,7 @@ while True:
     if "|" in args:
         index = args.index("|")
         left_args = args[:index]
-        right_args = args[index + 1:]
+        right_args = args[index + 1 :]
 
         read_fd, write_fd = os.pipe()
 
@@ -104,37 +103,29 @@ while True:
                     os.dup2(fd, 0)
                     os.close(fd)
 
-                    args = args[:index] + args[index + 2:]
+                    args = args[:index] + args[index + 2 :]
 
                 # Error redirection (2>)
                 if "2>" in args:
                     index = args.index("2>")
                     filename = args[index + 1]
 
-                    fd = os.open(
-                        filename,
-                        os.O_WRONLY | os.O_CREAT | os.O_TRUNC,
-                        0o644
-                    )
+                    fd = os.open(filename, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o644)
                     os.dup2(fd, 2)
                     os.close(fd)
 
-                    args = args[:index] + args[index + 2:]
+                    args = args[:index] + args[index + 2 :]
 
                 # Output redirection (>)
                 if ">" in args:
                     index = args.index(">")
                     filename = args[index + 1]
 
-                    fd = os.open(
-                        filename,
-                        os.O_WRONLY | os.O_CREAT | os.O_TRUNC,
-                        0o644
-                    )
+                    fd = os.open(filename, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o644)
                     os.dup2(fd, 1)
                     os.close(fd)
 
-                    args = args[:index] + args[index + 2:]
+                    args = args[:index] + args[index + 2 :]
 
                 # Execute the command
                 os.execvp(args[0], args)

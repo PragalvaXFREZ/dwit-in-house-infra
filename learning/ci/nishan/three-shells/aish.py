@@ -1,9 +1,8 @@
-
 import os
-import sys
 import shlex
-import signal
 import subprocess
+import sys
+from contextlib import ExitStack
 
 last_status = 0
 
@@ -31,12 +30,14 @@ def parse_command(command):
             if not args:
                 raise ValueError("Invalid pipe syntax")
 
-            commands.append({
-                "args": args,
-                "input": input_file,
-                "output": output_file,
-                "append": append
-            })
+            commands.append(
+                {
+                    "args": args,
+                    "input": input_file,
+                    "output": output_file,
+                    "append": append,
+                }
+            )
 
             args = []
             input_file = None
@@ -75,12 +76,9 @@ def parse_command(command):
             raise ValueError("Invalid command syntax")
         return []
 
-    commands.append({
-        "args": args,
-        "input": input_file,
-        "output": output_file,
-        "append": append
-    })
+    commands.append(
+        {"args": args, "input": input_file, "output": output_file, "append": append}
+    )
 
     return commands
 
@@ -90,16 +88,17 @@ def execute_pipeline(commands):
 
     processes = []
     previous_read = None
+    open_fds = set()
 
     try:
         for index, command in enumerate(commands):
-
             args = command["args"]
             is_last = index == len(commands) - 1
 
             # Create a pipe for the next command.
             if not is_last:
                 read_fd, write_fd = os.pipe()
+                open_fds.update((read_fd, write_fd))
             else:
                 read_fd = None
                 write_fd = None
@@ -107,45 +106,32 @@ def execute_pipeline(commands):
             stdin = previous_read
             stdout = write_fd
 
-            input_handle = None
-            output_handle = None
+            # Manage input and output redirection safely.
+            with ExitStack() as stack:
+                if command["input"]:
+                    stdin = stack.enter_context(open(command["input"], "r"))
 
-            # Input redirection.
-            if command["input"]:
-                input_handle = open(command["input"], "r")
-                stdin = input_handle
+                if command["output"]:
+                    mode = "a" if command["append"] else "w"
+                    stdout = stack.enter_context(open(command["output"], mode))
 
-            # Output redirection.
-            if command["output"]:
-                mode = "a" if command["append"] else "w"
-                output_handle = open(command["output"], mode)
-                stdout = output_handle
+                # Start the child process.
+                process = subprocess.Popen(args, stdin=stdin, stdout=stdout)
 
-            process = subprocess.Popen(
-                args,
-                stdin=stdin,
-                stdout=stdout,
-                preexec_fn=lambda: signal.signal(
-                    signal.SIGINT, signal.SIG_DFL
-                )
-            )
+                processes.append(process)
 
-            processes.append(process)
-
-            # Close parent copies of file descriptors.
+            # Close the parent's copy of the previous pipe.
             if previous_read is not None:
                 os.close(previous_read)
+                open_fds.discard(previous_read)
 
+            # Close the parent's copy of the pipe's write end.
             if write_fd is not None:
                 os.close(write_fd)
+                open_fds.discard(write_fd)
 
+            # Keep the read end for the next command.
             previous_read = read_fd
-
-            if input_handle:
-                input_handle.close()
-
-            if output_handle:
-                output_handle.close()
 
         # Wait for all commands.
         status = 0
@@ -157,9 +143,18 @@ def execute_pipeline(commands):
 
     except KeyboardInterrupt:
         print()
+
+        # Stop remaining child processes.
         for process in processes:
             if process.poll() is None:
-                process.wait()
+                try:
+                    process.terminate()
+                except ProcessLookupError:
+                    pass
+
+        for process in processes:
+            process.wait()
+
         return 130
 
     except FileNotFoundError as error:
@@ -170,21 +165,27 @@ def execute_pipeline(commands):
         print(f"mysh: {error}", file=sys.stderr)
         return 126
 
-    except Exception as error:
+    except (OSError, ValueError, subprocess.SubprocessError) as error:
         print(f"mysh: {error}", file=sys.stderr)
 
+        # Stop and reap already-started processes.
         for process in processes:
             if process.poll() is None:
-                process.terminate()
+                try:
+                    process.terminate()
+                except ProcessLookupError:
+                    pass
+
         for process in processes:
             process.wait()
 
         return 1
 
     finally:
-        if previous_read is not None:
+        # Close any file descriptors still owned by the parent.
+        for fd in open_fds:
             try:
-                os.close(previous_read)
+                os.close(fd)
             except OSError:
                 pass
 
@@ -215,7 +216,9 @@ def execute(commands):
                 os.chdir(os.path.expanduser(path))
 
                 os.environ["OLDPWD"] = old_directory
-                print(os.getcwd()) if len(args) == 2 and args[1] == "-" else None
+
+                if len(args) == 2 and args[1] == "-":
+                    print(os.getcwd())
 
                 last_status = 0
 
@@ -228,13 +231,13 @@ def execute(commands):
         if args[0] == "exit":
             sys.exit(last_status)
 
-    # cd cannot change the parent shell from a pipeline.
+    # cd and exit cannot change the parent shell from a pipeline.
     for command in commands:
         if command["args"][0] in ("cd", "exit"):
             print(
                 f"mysh: {command['args'][0]}: "
                 "built-in command cannot be used in a pipeline",
-                file=sys.stderr
+                file=sys.stderr,
             )
             last_status = 1
             return
@@ -267,7 +270,7 @@ def main():
             print(f"mysh: {error}", file=sys.stderr)
             last_status = 2
 
-        except Exception as error:
+        except (OSError, subprocess.SubprocessError) as error:
             print(f"mysh: {error}", file=sys.stderr)
             last_status = 1
 
