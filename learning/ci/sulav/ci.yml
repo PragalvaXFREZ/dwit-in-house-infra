@@ -1,14 +1,8 @@
-name: CI (sulav)
+name: CI
 
 on:
   push:
-    paths:
-      - "learning/ci/sulav/**"
-      - ".github/workflows/ci-sulav.yml"
   pull_request:
-    paths:
-      - "learning/ci/sulav/**"
-      - ".github/workflows/ci-sulav.yml"
 
 permissions:
   contents: read

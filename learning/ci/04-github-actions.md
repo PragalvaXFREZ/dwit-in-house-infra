@@ -4,13 +4,13 @@
 
 Run the same checks on every proposed change, without relying on your laptop.
 
-In **your fork**, create `.github/workflows/ci-<your-name>.yml` at the repository root. Do not call it `ci.yml`: other students' workflows live in the same folder. Make it run only when files in your folder or the workflow itself change (`paths:` under each trigger). See [How to hand in a lab](../README.md#3-github-actions-workflows). Write the workflow yourself using the requirements below and the [GitHub Actions quickstart](https://docs.github.com/en/actions/get-started/quickstart).
+In **your fork**, create `.github/workflows/ci.yml` at the repository root. It runs in your fork only. When you hand in, move it into your folder, as [How to hand in a lab](../README.md#3-github-actions-workflows) explains. Write the workflow yourself using the requirements below and the [GitHub Actions quickstart](https://docs.github.com/en/actions/get-started/quickstart).
 
 GitHub disables workflows on a fresh fork. Before pushing your workflow, open your fork's **Actions** tab and click **I understand my workflows, go ahead and enable them**. If you skip this, pushing your workflow does nothing and no run appears.
 
 ## Workflow requirements
 
-- Trigger on `push` and `pull_request` (the `on:` key), only for your own paths.
+- Trigger on `push` and `pull_request` (the `on:` key).
 - Use a GitHub-hosted Ubuntu runner (`runs-on:`).
 - Give the token only `contents: read` (a top-level `permissions:` block).
 - Set a five-minute job timeout (`timeout-minutes:` on the job).

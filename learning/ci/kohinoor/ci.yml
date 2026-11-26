@@ -1,14 +1,8 @@
-name: CI (kohinoor)
+name: Inventory CI
 
 on:
   push:
-    paths:
-      - "learning/ci/kohinoor/**"
-      - ".github/workflows/ci-kohinoor.yml"
   pull_request:
-    paths:
-      - "learning/ci/kohinoor/**"
-      - ".github/workflows/ci-kohinoor.yml"
 
 permissions:
   contents: read
@@ -20,7 +14,7 @@ jobs:
     timeout-minutes: 5
     defaults:
       run:
-        working-directory: learning/ci/kohinoor
+        working-directory: learning/ci/demo
 
     steps:
       - name: Check out code
@@ -48,7 +42,7 @@ jobs:
     timeout-minutes: 5
     defaults:
       run:
-        working-directory: learning/ci/kohinoor
+        working-directory: learning/ci/demo
 
     steps:
       - name: Check out code
@@ -71,7 +65,7 @@ jobs:
     timeout-minutes: 5
     defaults:
       run:
-        working-directory: learning/ci/kohinoor
+        working-directory: learning/ci/demo
 
     steps:
       - name: Check out code
@@ -95,5 +89,5 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: inventory-checker
-          path: learning/ci/kohinoor/inventory-checker.pyz
+          path: learning/ci/demo/inventory-checker.pyz
           retention-days: 1

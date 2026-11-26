@@ -20,35 +20,23 @@ For the CI labs you can keep one copy of the code and add notes for each lab (`l
 - The starter, for example `learning/ci/demo/`. It stays the same for the next student.
 - The lab guides (`learning/ci/0*.md`, `learning/ci/README.md`).
 - Another student's folder.
-- Another student's workflow file.
+- Anything in `.github/`.
 
 If a guide is wrong, open a separate pull request for it, or tell your mentor.
 
 ## 3. GitHub Actions workflows
 
-GitHub only reads workflows from `.github/workflows/` at the top of the repository. A workflow inside your own folder never runs. So this is the one file you add outside your folder:
+This repository does not run your workflow. You run it in your fork, and that is where you see what it does.
 
-```text
-.github/workflows/<course>-<your-name>.yml      for example ci-sulav.yml
-```
+1. In your fork, create `.github/workflows/ci.yml` and do lab 4 there, including the failed and the fixed pull request inside your fork.
+2. Before you hand in, move the workflow into your folder. It stays as a record of what you wrote, but it does not run here:
 
-Never name it `ci.yml`. If everyone adds `ci.yml`, the pull requests conflict and only one can be merged.
+   ```bash
+   git mv .github/workflows/ci.yml learning/ci/<your-name>/ci.yml
+   ```
 
-Give the workflow your name, and make it run only when your files change. Otherwise your check runs on every other student's pull request too.
-
-```yaml
-name: CI (sulav)
-
-on:
-  push:
-    paths:
-      - "learning/ci/sulav/**"
-      - ".github/workflows/ci-sulav.yml"
-  pull_request:
-    paths:
-      - "learning/ci/sulav/**"
-      - ".github/workflows/ci-sulav.yml"
-```
+3. Your pull request to this repository must not add or change anything in `.github/`.
+4. In your notes, link to the runs in your fork (the failed check, the fixed check and the artifact) and add screenshots of them.
 
 ## 4. What counts as evidence
 
@@ -62,6 +50,6 @@ If you would rather explain something at length, write it in your blog post and 
 
 1. One pull request per lab. Name it `<Course> lab <N>: <your name>`, for example `Linux lab 1: Sulav`.
 2. Your mentor reviews it. If you are asked for changes, push new commits to the same branch. Do not open a new pull request.
-3. Your mentor may push a small fix to your branch before merging, such as moving a file or renaming a workflow. Pull before you keep working: `git pull`.
+3. Your mentor may push a small fix to your branch before merging, such as moving a file to the right folder. Pull before you keep working: `git pull`.
 4. When it is approved, the mentor merges it with a merge commit, so your own commits stay in the history.
 5. Do not start the next lab until the current one is merged. Each lab builds on the one before it.
