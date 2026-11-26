@@ -1,0 +1,4 @@
+[
+  {"name": "lab-one", "ip": "192.0.2.10", "role": "worker"},
+  {"name": "lab-two", "ip": "192.0.2.11", "role": "worker"}
+]
