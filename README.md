@@ -13,5 +13,6 @@ Add new folders when we actually need them.
 
 ## Learning
 
+- [How to hand in a lab](learning/README.md): where your files go, workflow names, evidence and pull requests.
 - [Git and GitHub](learning/git/git-github-guide.md)
-- [CI: five hands-on labs](learning/ci/README.md) — local checks, linting, tests, GitHub Actions, then an isolated runner.
+- [CI: five hands-on labs](learning/ci/README.md): local checks, linting, tests, GitHub Actions, then an isolated runner.
