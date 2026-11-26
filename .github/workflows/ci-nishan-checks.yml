@@ -1,8 +1,14 @@
-name: Nishan lab checks
+name: Mentor checks (nishan)
 
 on:
   push:
+    paths:
+      - "learning/ci/nishan/**"
+      - ".github/workflows/ci-nishan-checks.yml"
   pull_request:
+    paths:
+      - "learning/ci/nishan/**"
+      - ".github/workflows/ci-nishan-checks.yml"
 
 permissions:
   contents: read
