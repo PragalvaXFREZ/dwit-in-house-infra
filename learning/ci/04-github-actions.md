@@ -4,19 +4,19 @@
 
 Run the same checks on every proposed change, without relying on your laptop.
 
-In **your fork**, create `.github/workflows/ci.yml` at the repository root. Write the workflow yourself using the requirements below and the [GitHub Actions quickstart](https://docs.github.com/en/actions/get-started/quickstart).
+In **your fork**, create `.github/workflows/ci-<your-name>.yml` at the repository root. Do not call it `ci.yml`: other students' workflows live in the same folder. Make it run only when files in your folder or the workflow itself change (`paths:` under each trigger). See [How to hand in a lab](../README.md#3-github-actions-workflows). Write the workflow yourself using the requirements below and the [GitHub Actions quickstart](https://docs.github.com/en/actions/get-started/quickstart).
 
-GitHub disables workflows on a fresh fork. Before pushing your workflow, open your fork's **Actions** tab and click **I understand my workflows, go ahead and enable them**. If you skip this, pushing `ci.yml` does nothing and no run appears.
+GitHub disables workflows on a fresh fork. Before pushing your workflow, open your fork's **Actions** tab and click **I understand my workflows, go ahead and enable them**. If you skip this, pushing your workflow does nothing and no run appears.
 
 ## Workflow requirements
 
-- Trigger on `push` and `pull_request` (the `on:` key).
+- Trigger on `push` and `pull_request` (the `on:` key), only for your own paths.
 - Use a GitHub-hosted Ubuntu runner (`runs-on:`).
 - Give the token only `contents: read` (a top-level `permissions:` block).
 - Set a five-minute job timeout (`timeout-minutes:` on the job).
 - Check out the code with persisted Git credentials disabled (the `persist-credentials` input of `actions/checkout`, under `with:`).
 - Set up Python 3.11 (the `python-version` input of `actions/setup-python`).
-- Run shell steps from `learning/ci/demo` (`defaults.run.working-directory` on the job).
+- Run shell steps from `learning/ci/<your-name>` (`defaults.run.working-directory` on the job).
 - Install the exact dependencies in `requirements-dev.txt`.
 - Run lint, formatting and test checks using the commands from labs 2–3.
 - Only if those checks pass, create and upload a source archive as a build artifact.
@@ -38,7 +38,7 @@ python -m zipapp build -o inventory-checker.pyz
 python inventory-checker.pyz examples/valid.json
 ```
 
-Upload `learning/ci/demo/inventory-checker.pyz`, retaining it for one day.
+Upload `learning/ci/<your-name>/inventory-checker.pyz`, retaining it for one day.
 An action's file-path input is relative to the workspace root; `defaults.run.working-directory` affects shell steps, not `uses` steps.
 
 ## Break and investigate

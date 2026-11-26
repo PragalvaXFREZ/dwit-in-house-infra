@@ -23,7 +23,7 @@ Use `python -m ruff format inventory.py` to fix formatting.
 ## Your challenge
 
 Choose a Ruff rule, explain what problem it catches, and demonstrate a violation and fix.
-Put any configuration in `pyproject.toml` inside this demo directory.
+Put any configuration in `pyproject.toml` inside your folder.
 
 ## Done when
 
