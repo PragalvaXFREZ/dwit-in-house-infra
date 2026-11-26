@@ -1,14 +1,8 @@
-name: CI (nishan)
+name: CI
 
 on:
   push:
-    paths:
-      - "learning/ci/nishan/lab4/**"
-      - ".github/workflows/ci-nishan.yml"
   pull_request:
-    paths:
-      - "learning/ci/nishan/lab4/**"
-      - ".github/workflows/ci-nishan.yml"
 
 permissions:
   contents: read

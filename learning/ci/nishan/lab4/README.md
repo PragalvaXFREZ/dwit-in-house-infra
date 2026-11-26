@@ -8,7 +8,7 @@ Automate code quality checks, unit tests, and application packaging using GitHub
 
 The workflow is located at:
 
-`.github/workflows/ci-nishan.yml`
+`.github/workflows/ci.yml`
 
 It runs automatically on every push and pull request.
 
